@@ -13,8 +13,13 @@ public class Cst438Project2Group6Application {
 	public static void main(String[] args) {
 		SpringApplication.run(Cst438Project2Group6Application.class, args);
 	}
+	
 	@GetMapping("/hello")
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
       return String.format("Hello %s!!!", name);
     }
+	@GetMapping("/")
+	public String home(){
+		return String.format("Hi. You are in home rn");
+	}
 }
