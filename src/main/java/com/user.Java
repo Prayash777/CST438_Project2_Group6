@@ -1,11 +1,15 @@
 public class User{
-    String Username;
-    String Password;
-    Boolean isAdmin;
+    private String Username;
+    private String Password;
+    private Int Id;
+    private Boolean isAdmin;
+    private String Email;
 
-    public User(String TheUsername, String ThePassword){
+    public User(String TheUsername, String ThePassword, String TheEmail){
         Username = TheUsername;
         Password = ThePassword;
+        Email = TheEmail;
+        Id = 0;
         isAdmin = false;
     }
 
@@ -23,6 +27,14 @@ public class User{
 
     public void setPassword(String newP){
         Password = newP;
+    }
+
+    public String getEmail(){
+        return Email;
+    }
+
+    public void setEmail(String newE){
+        Email = newE;
     }
 
     public void makeAdmin(){
