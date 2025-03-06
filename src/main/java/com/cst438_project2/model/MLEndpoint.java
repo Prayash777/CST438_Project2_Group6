@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.cst438_project2.model;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
