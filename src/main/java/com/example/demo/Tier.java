@@ -1,11 +1,19 @@
 package com.example.demo;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class Tier {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int tierId;
     private String tier;
 
-    public Tier (int i, String t){
-        this.tierId = i;
+    public Tier() {}
+
+    public Tier(String t){
         this.tier = t;
     }
 
