@@ -1,4 +1,4 @@
-package com.cst438_project2.model;
+package com.cst438_project2;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
