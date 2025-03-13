@@ -10,6 +10,7 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int itemId;
+    
     private String itemName;
 
     @ManyToOne

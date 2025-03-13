@@ -6,16 +6,15 @@ import jakarta.persistence.*;
 @Table(name = "users")
 
 public class User{
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
     @Column(unique = true, nullable = false)
     private String username;
     
     @Column(nullable = false)
     private String password;
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
     
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -26,7 +25,6 @@ public class User{
         this.username = username;
         this.password = password;
         this.email = email;
-        this.id = 0;
         this.role = Role.USER;
     }
 
@@ -61,4 +59,8 @@ public class User{
     public void removeAdmin(){
         this.role = Role.USER;
     }
+    
+    public Role getRole() {
+    return role;
+}
 }
