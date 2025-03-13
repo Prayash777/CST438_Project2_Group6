@@ -7,19 +7,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
-@RestController
+//@RestController
+//@Controller
 public class Cst438Project2Group6Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Cst438Project2Group6Application.class, args);
 	}
 	
-	@GetMapping("/hello")
+	/*@GetMapping("/hello")
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
       return String.format("Hello %s!!!", name);
     }
 	@GetMapping("/") 
 	public String home(){
 		return String.format("Hi. You are in home rn");
-	}
+	}*/
+	/*@GetMapping("/")
+        public String home(Model model) {
+            model.addAttribute("message", "Hello, Thymeleaf!");
+            return "home"; // Returns the home.html template
+    }*/
 }
