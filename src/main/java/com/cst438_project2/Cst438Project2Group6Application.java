@@ -18,7 +18,7 @@ public class Cst438Project2Group6Application {
     public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
       return String.format("Hello %s!!!", name);
     }
-	@GetMapping("/")
+	@GetMapping("/") 
 	public String home(){
 		return String.format("Hi. You are in home rn");
 	}
