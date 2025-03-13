@@ -1,4 +1,4 @@
-package com.cst438_project2;
+package com.cst438_project2.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
