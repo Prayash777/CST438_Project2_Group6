@@ -1,8 +1,9 @@
 package com.cst438_project2.controller;
 
-import com.cst438_project2.model.Item;
 import com.cst438_project2.model.Categories;
+import com.cst438_project2.model.Item;
 import com.cst438_project2.service.TierListService;
+import com.cst438_project2.repository.CategoriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,78 +12,56 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/items")
+@RequestMapping("/api")
 public class ItemController {
-
     @Autowired
     private TierListService tierListService;
 
-    // Create a new item
-    @PostMapping
-    public ResponseEntity<?> createItem(@RequestBody Item item) {
-        // Check if the category exists
-        if (item.getCategory() != null) {
-            Optional<Categories> category = tierListService.getCategoriesById(item.getCategory().getCategoryId());
-            if (category.isEmpty()) {
-                return ResponseEntity.badRequest().body("Error: Category with ID " + item.getCategory().getCategoryId() + " does not exist.");
+    @Autowired
+    private CategoriesRepository categoriesRepository;
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<Categories>> getAllCategories() {
+        List<Categories> categoriesList = tierListService.getCategories();
+        if (categoriesList.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(categoriesList);
+    }
+
+    @PostMapping("/categories")
+    public ResponseEntity<String> addCategory(@RequestBody Categories category) {
+        if (category == null || category.getCategoryName().isEmpty()) {
+            return ResponseEntity.badRequest().body("Invalid category data");
+        }
+        tierListService.saveCategories(category);
+        return ResponseEntity.ok("Category added");
+    }
+
+    @PostMapping("/categories/{categoryId}/items")
+    public ResponseEntity<String> addItemtoCategory(
+        @PathVariable int categoryId,
+        @RequestParam String itemName) {
+            Optional<Categories> categoryOpt = categoriesRepository.findById(categoryId);
+            if (!categoryOpt.isPresent()) {
+                return ResponseEntity.badRequest().body("Category not found");
             }
-            item.setCategory(category.get()); // Link valid category
-        }
-
-        Item savedItem = tierListService.saveItem(item);
-        return ResponseEntity.ok(savedItem);
-    }
-
-    // Get all items
-    @GetMapping
-    public List<Item> getAllItems() {
-        return tierListService.getItems();
-    }
-
-    // Get item by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getItemById(@PathVariable int id) {
-        return itemRepository.findById(id)
-            .map(item -> ResponseEntity.ok().body(item))
-            .orElse(ResponseEntity.status(404).body("Item with ID " + id + " not found."));
-    }
-
-    // Update an item
-    @PutMapping("/{id}")
-    public ResponseEntity<?> updateItem(@PathVariable int id, @RequestBody Item updatedItem) {
-        Optional<Item> existingItem = tierListService.getItemsById(id);
-
-        if (existingItem.isPresent()) {
-            Item item = existingItem.get();
-
-            // Update item details
-            item.setItemName(updatedItem.getItemName());
-
-            // Handle category updates
-            if (updatedItem.getCategory() != null) {
-                Optional<Categories> category = tierListService.getCategoriesById(updatedItem.getCategory().getCategoryId());
-                if (category.isEmpty()) {
-                    return ResponseEntity.badRequest().body("Error: Category with ID " + updatedItem.getCategory().getCategoryId() + " does not exist.");
-                }
-                item.setCategory(category.get());
+            Categories categories = categoryOpt.get();
+            if (itemName == null || itemName.isEmpty()) {
+                return ResponseEntity.badRequest().body("Invalid item name");
             }
-
-            tierListService.saveItem(item);
-            return ResponseEntity.ok(item);
-        } else {
-            return ResponseEntity.status(404).body("Item with ID " + id + " not found.");
-        }
+            Item newItem = new Item(itemName, categories);
+            tierListService.saveItem(newItem);
+            return ResponseEntity.ok("Item added");
     }
 
-    // Delete an item
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteItem(@PathVariable int id) {
-        Optional<Item> item = tierListService.getItemsById(id);
-        if (item.isPresent()) {
-            tierListService.deleteItem(id);
-            return ResponseEntity.ok("Item deleted successfully.");
-        } else {
-            return ResponseEntity.status(404).body("Item with ID " + id + " not found.");
+    @GetMapping("/categories/{categoryId}/items")
+    public ResponseEntity<List<Item>> getItemsForCategories(@PathVariable int categoryId) {
+        Optional<Categories> categoryOpt = categoriesRepository.findById(categoryId);
+        if (!categoryOpt.isPresent()) {
+            return ResponseEntity.badRequest().body(null);
         }
+        List<Item> items = tierListService.getItemsByCategory(categoryOpt.get());
+        return ResponseEntity.ok(items);
     }
 }

@@ -1,4 +1,5 @@
 package com.cst438_project2.service;
+
 import com.cst438_project2.model.Categories;
 import com.cst438_project2.model.Item;
 import com.cst438_project2.model.Tier;
@@ -7,8 +8,10 @@ import com.cst438_project2.repository.ItemRepository;
 import com.cst438_project2.repository.TierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.Date;
 
 @Service
 public class TierListService {
@@ -47,6 +50,10 @@ public class TierListService {
         return itemRepository.findAll();
     }
 
+    public List<Item> getItemsByCategory(Categories categories) {
+        return itemRepository.findByCategory(categories);
+    }
+
     public Optional<Item> getItemsById(int id) {
         return itemRepository.findById(id);
     }
@@ -70,5 +77,10 @@ public class TierListService {
 
     public void deleteTier(int id) {
         tierRepository.deleteById(id);
+    }
+
+    public void insertData() {
+        Categories categories = new Categories("Movies", new Date(), new Date());
+        categoriesRepository.save(categories);
     }
 }
