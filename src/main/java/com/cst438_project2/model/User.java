@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
-
 public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,9 +16,15 @@ public class User{
     private String password;
     
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
     
+    @Column()
     private String email;
+
+    public User() {
+        this.role = Role.USER;  // Default role
+    }
 
     public User(String username, String password, String email){
         this.username = username;
@@ -61,6 +66,9 @@ public class User{
     }
     
     public Role getRole() {
-    return role;
-}
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

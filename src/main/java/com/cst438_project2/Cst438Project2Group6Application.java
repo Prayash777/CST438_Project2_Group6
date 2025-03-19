@@ -1,13 +1,15 @@
 package com.cst438_project2;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@RestController
+@EntityScan(basePackages = "com.cst438_project2.model")
 public class Cst438Project2Group6Application {
 
 	public static void main(String[] args) {

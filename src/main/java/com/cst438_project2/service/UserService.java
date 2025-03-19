@@ -1,50 +1,47 @@
-package com.cst438_project2.service;
+// package com.cst438_project2.service;
 
-import com.cst438_project2.model.Role;
-import com.cst438_project2.model.User;
-import com.cst438_project2.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+// import com.cst438_project2.model.User;
+// import com.cst438_project2.repository.UserRepository;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+// import java.util.List;
+// import java.util.Optional;
 
-@Service
-public class UserService {
+// @Service
+// public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+   
+//     private UserRepository userRepository;
 
-    public User saveUser(User user) {
-        return userRepository.save(user);
-    }
+//     @Autowired
+//     public UserService(UserRepository userRepository) {
+//         this.userRepository = userRepository;
+//     }
 
-    public List<User> getUsers() {
-        return userRepository.findAll();
-    }
+//     // Get all users
+//     public List<User> getAllUsers() {
+//         return userRepository.findAll();
+//     }
 
-    public Optional<User> getUserById(int id) {
-        return userRepository.findById(id);
-    }
+//     // Get user by ID
+//     public User getUserById(int id) {
+//         return userRepository.findById(id)
+//                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+//     }
 
-    public User updateUser(int id, User updatedUser) {
-        return userRepository.findById(id).map(user -> {
-            user.setUserame(updatedUser.getUsername());
-            user.setEmail(updatedUser.getEmail());
-            user.setPassword(updatedUser.getPassword());
-            user.setRole(updatedUser.getRole()); // Ensure role updates if needed
-            return userRepository.save(user);
-        }).orElseThrow(() -> new RuntimeException("User not found"));
-    }
+//     // Create new user
+//     public User createUser(User user) {
+//         return userRepository.save(user);
+//     }
 
-    public void deleteUser(int id) {
-        userRepository.deleteById(id);
-    }
+//     // Update user details
+//     public User updateUser(User user) {
+//         return userRepository.save(user);
+//     }
 
-    public User assignAdminRole(int id) {
-        return userRepository.findById(id).map(user -> {
-            user.makeAdmin();
-            return userRepository.save(user);
-        }).orElseThrow(() -> new RuntimeException("User not found"));
-    }
-}
+//     // Delete user
+//     public void deleteUser(int id) {
+//         userRepository.deleteById(id);
+//     }
+// }
