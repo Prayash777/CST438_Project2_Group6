@@ -1,29 +1,32 @@
 package com.cst438_project2.model;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.util.Date;
 
-import jakarta.persistence.*;
-import java.time.LocalDate;
+import jakarta.persistence.Column;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
-@Table(name = "categories")
-
 public class Categories {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
     private int categoryId;
 
-    @Column(nullable = false, unique = true) 
+    @Column(name = "category_name")
     private String categoryName;
     
-     @Column(nullable = false)
-    private LocalDate startDate;
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
 
-    @Column(nullable = false)
-    private LocalDate endDate;
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
     
     public Categories() {}
 
-     public Categories(String categoryName, LocalDate startDate, LocalDate endDate) {
+     public Categories(String categoryName, Date startDate, Date endDate) {
         this.categoryName = categoryName;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -44,29 +47,19 @@ public class Categories {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
-    public LocalDate getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    @Override
-    public String toString() {
-        return "Categories{" +
-                "categoryId=" + categoryId +
-                ", categoryName='" + categoryName + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                '}';
     }
 }
