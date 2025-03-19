@@ -1,14 +1,20 @@
 package com.cst438_project2.service;
+
 import com.cst438_project2.model.Categories;
 import com.cst438_project2.model.Item;
 import com.cst438_project2.model.Tier;
 import com.cst438_project2.repository.CategoriesRepository;
 import com.cst438_project2.repository.ItemRepository;
 import com.cst438_project2.repository.TierRepository;
+
+import jakarta.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.Date;
 
 @Service
 public class TierListService {
@@ -34,17 +40,40 @@ public class TierListService {
         return categoriesRepository.findById(id);
     }
 
+    @PostConstruct
+    public void insertData() {
+        List<Categories> categories = categoriesRepository.findAll();
+        boolean exists = categories.stream().anyMatch(c -> c.getCategoryName().equals("Movies"));
+        if (!exists) {
+            Categories insertCategories = new Categories("Movies", new Date(), new Date());
+            categoriesRepository.save(insertCategories);
+        }
+        categories = categoriesRepository.findAll();
+        categories.forEach(category -> System.out.println("Category: " + category.getCategoryName()));
+    }
+
     public void deleteCategories(int id) {
         categoriesRepository.deleteById(id);
     }
 
     // Item CRUD operations
-    public Item saveItem(Item item) {
-        return itemRepository.save(item);
+    public Item saveItem(Item item, int categoriesId) {
+        Optional<Categories> categoryOpt = categoriesRepository.findById(categoriesId);
+        if (categoryOpt.isPresent()) {
+            Categories categories = categoryOpt.get();
+            item.setCategory(categories);
+            return itemRepository.save(item);
+        } else {
+            return null;
+        }
     }
 
     public List<Item> getItems() {
         return itemRepository.findAll();
+    }
+
+    public List<Item> getItemsByCategory(Categories categories) {
+        return itemRepository.findByCategory(categories);
     }
 
     public Optional<Item> getItemsById(int id) {

@@ -5,6 +5,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import jakarta.persistence.JoinColumn;
+
 @Entity
 public class Item {
     @Id
@@ -14,6 +16,7 @@ public class Item {
     private String itemName;
 
     @ManyToOne
+    @JoinColumn(name = "category_id")
     private Categories category;
 
     public Item() {}
