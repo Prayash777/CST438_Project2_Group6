@@ -4,6 +4,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
@@ -13,7 +15,7 @@ public class Categories {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int categoryId;
 
-
+    @Column(name = "category_name")
     private String categoryName;
     
     @Temporal(TemporalType.DATE)

@@ -2,9 +2,6 @@ package com.cst438_project2.model;
 
 import jakarta.persistence.*;
 
-import com.cst438_project2.model.Role;  
-
-
 @Entity
 @Table(name = "users")
 public class User {

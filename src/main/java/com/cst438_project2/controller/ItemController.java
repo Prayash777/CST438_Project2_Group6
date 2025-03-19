@@ -5,13 +5,15 @@ import com.cst438_project2.model.Item;
 import com.cst438_project2.service.TierListService;
 import com.cst438_project2.repository.CategoriesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@Controller
 @RequestMapping("/api")
 public class ItemController {
     @Autowired
@@ -20,48 +22,44 @@ public class ItemController {
     @Autowired
     private CategoriesRepository categoriesRepository;
 
-    @GetMapping("/categories")
-    public ResponseEntity<List<Categories>> getAllCategories() {
+    @GetMapping("/")
+    public String getAllCategories(Model model) {
         List<Categories> categoriesList = tierListService.getCategories();
-        if (categoriesList.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(categoriesList);
+        model.addAttribute("categories", categoriesList);
+        return "index";
     }
 
     @PostMapping("/categories")
-    public ResponseEntity<String> addCategory(@RequestBody Categories category) {
-        if (category == null || category.getCategoryName().isEmpty()) {
-            return ResponseEntity.badRequest().body("Invalid category data");
-        }
-        tierListService.saveCategories(category);
-        return ResponseEntity.ok("Category added");
+    public String createCategory(@RequestParam String categoryName, Model model) {
+        Categories categories = new Categories(categoryName, new Date(), new Date());
+        tierListService.saveCategories(categories);
+        List<Categories> categoriesList = tierListService.getCategories();
+        model.addAttribute("categories", categoriesList);
+        return "index";
     }
 
     @PostMapping("/categories/{categoryId}/items")
-    public ResponseEntity<String> addItemtoCategory(
+    public String addItemtoCategory(
         @PathVariable int categoryId,
-        @RequestParam String itemName) {
+        @RequestParam String itemName,
+        Model model) {
             Optional<Categories> categoryOpt = categoriesRepository.findById(categoryId);
-            if (!categoryOpt.isPresent()) {
-                return ResponseEntity.badRequest().body("Category not found");
+            if (categoryOpt.isPresent()) {
+                Categories categories = categoryOpt.get();
+                Item newItem = new Item(itemName, categories);
+                tierListService.saveItem(newItem, categoryId);
             }
-            Categories categories = categoryOpt.get();
-            if (itemName == null || itemName.isEmpty()) {
-                return ResponseEntity.badRequest().body("Invalid item name");
-            }
-            Item newItem = new Item(itemName, categories);
-            tierListService.saveItem(newItem);
-            return ResponseEntity.ok("Item added");
+            return "redirect:/api/categories/" + categoryId + "/items";
     }
 
     @GetMapping("/categories/{categoryId}/items")
-    public ResponseEntity<List<Item>> getItemsForCategories(@PathVariable int categoryId) {
-        Optional<Categories> categoryOpt = categoriesRepository.findById(categoryId);
-        if (!categoryOpt.isPresent()) {
-            return ResponseEntity.badRequest().body(null);
+    public String getItemsForCategories(@PathVariable int categoryId, Model model) {
+        Optional<Categories> categoryOpt = tierListService.getCategoriesById(categoryId);
+        if (categoryOpt.isPresent()) {
+            List<Item> items = tierListService.getItemsByCategory(categoryOpt.get());
+            model.addAttribute("items", items);
+            return "categoryItems";
         }
-        List<Item> items = tierListService.getItemsByCategory(categoryOpt.get());
-        return ResponseEntity.ok(items);
+        return "redirect:/api/categories";
     }
 }
