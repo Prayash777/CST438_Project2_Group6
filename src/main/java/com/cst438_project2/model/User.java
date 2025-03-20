@@ -3,7 +3,6 @@ package com.cst438_project2.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")
 public class User {
 
 

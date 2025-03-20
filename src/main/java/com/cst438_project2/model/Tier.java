@@ -1,6 +1,6 @@
 package com.cst438_project2.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 
 import jakarta.persistence.JoinColumn;
