@@ -4,18 +4,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Date;
+import jakarta.persistence.Table;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
+@Table(name = "categories")
 public class Categories {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "categoryId")
     private int categoryId;
 
-    @Column(name = "category_name")
+    @Column(name = "categoryName")
     private String categoryName;
     
     @Temporal(TemporalType.DATE)

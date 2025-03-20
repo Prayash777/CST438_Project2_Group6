@@ -1,19 +1,20 @@
 package com.cst438_project2.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
+@Table(name = "Tier")
 public class Tier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "tier_id")
     private int tierId;
+
+    @Column(nullable = false, unique = true)
     private String tier;
 
     @ManyToOne

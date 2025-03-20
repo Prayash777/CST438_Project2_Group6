@@ -24,4 +24,3 @@ public class Cst438Project2Group6Application {
         return "Hi. You are in home rn";
     }
 }
-
