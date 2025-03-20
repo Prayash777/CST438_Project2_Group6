@@ -1,31 +1,36 @@
-// package com.cst438_project2.controller;
+package com.cst438_project2.controller;
 
-// import com.cst438_project2.model.User;
-// //import com.cst438_project2.service.UserService;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.http.ResponseEntity;
-// import org.springframework.web.bind.annotation.*;
-// import com.cst438_project2.repository.UserRepository;
+import com.cst438_project2.service.UserService;
+import com.cst438_project2.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-// import java.util.List;
-// import java.util.Optional;
+@Controller
+public class UserController {
 
-// @RestController
-// @RequestMapping("/api/users")
-// public class UserController {
-//     @Autowired
-//     private UserRepository userRepository;
+    @Autowired
+    private UserService userService;
 
-//     // Get all users
-//     @GetMapping
-//     public List<User> getAllUsers() {
-//         return userRepository.findAll();
-//     }
+    @GetMapping("/register")
+    public String showRegisterPage() {
+        return "index"; 
+    }
 
-//     // Create a new user
-//     @PostMapping
-//     public User createUser(@RequestBody User newUser) {
-//         return userRepository.save(newUser);
-//     }
-    
-// }
+    @PostMapping("/register")
+    public String registerUser(@RequestParam String username, @RequestParam String email, @RequestParam String password, Model model) {
+        User user = new User(username, email, password);
+        userService.createUser(user);
+
+        model.addAttribute("message", "Registration successful. Please log in.");
+        return "login";
+    }
+
+    @GetMapping("/login")
+    public String showLoginPage() {
+        return "login"; 
+    }
+}
