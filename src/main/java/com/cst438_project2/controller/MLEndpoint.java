@@ -18,10 +18,10 @@ public class MLEndpoint {
 
     // OpenAI API configuration loaded from application.properties
     @Value("${openai.api.url}")
-    private String openAiUrl; // e.g., "https://api.openai.com/v1/embeddings"
+    private String openAiUrl; 
 
     @Value("${openai.api.key}")
-    private String openAiKey; // Loaded from environment variable
+    private String openAiKey; 
 
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -56,13 +56,18 @@ public class MLEndpoint {
      * Create a new ML-processed tier list.
      * 
      * Expected JSON payload:
-     * {
-     *   "userId": 1,
-     *   "tierList": {
-     *         "title": "Top Video Games",
-     *         "items": ["cat", "kitten", "kitty", "CAT", "cAt", "C4t", "dog", "puppy"]
-     *   }
-     * }
+{
+    "userId": 1,
+    "tierList": {
+    "title": "Test Tier List",
+    "items": [
+      "cat", "kitten", "kitty", "CAT", "cAt", "C4t",
+      "dog", "puppy", "DOG", "PUPPY", "bark", "woof",
+      "apple", "Apple", "orange", "ORANGE", "mac n cheese", "macncheese",
+      "table", "desk", "chair", "sofa", "couch", "COUCH"
+         ]
+      }
+    }
      */
     @PostMapping("/embeddings")
     public ResponseEntity<?> processTierList(@RequestBody Map<String, Object> payload) {
@@ -76,11 +81,6 @@ public class MLEndpoint {
             return ResponseEntity.badRequest().body("Tier list items cannot be empty.");
         }
         
-        // ----- OLD HARDCODED LOGIC (Commented Out) -----
-        // payload.put("grouping", "Items have been grouped by similarity");
-        // payload.put("similarityScores", new double[]{0.90, 0.80, 0.70});
-        // payload.put("message", "Tier list processed successfully");
-        // -----------------------------------------------
         
         // NEW: Normalize items to lowercase for consistent grouping.
         List<String> normalizedItems = new ArrayList<>();
@@ -180,7 +180,6 @@ public class MLEndpoint {
             // If the best similarity exceeds the threshold, add the item to that cluster.
             if (bestSim >= threshold && bestClusterKey != null) {
                 clusters.get(bestClusterKey).add(originalItems.get(i));
-                // Update the cluster center with the new vector.
                 double[] oldCenter = clusterCenters.get(bestClusterKey);
                 int clusterSize = clusters.get(bestClusterKey).size();
                 double[] newCenter = updateClusterCenter(oldCenter, currentEmbedding, clusterSize);
