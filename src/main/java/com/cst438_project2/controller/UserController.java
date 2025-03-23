@@ -15,22 +15,32 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/register")
-    public String showRegisterPage() {
-        return "index"; 
+
+    @GetMapping("/")
+    public String showRegistrationPage() {
+        return "index";
     }
 
     @PostMapping("/register")
     public String registerUser(@RequestParam String username, @RequestParam String email, @RequestParam String password, Model model) {
-        User user = new User(username, email, password);
-        userService.createUser(user);
-
-        model.addAttribute("message", "Registration successful. Please log in.");
-        return "login";
+        try {
+            if (userService.findByEmail(email).isPresent()) {
+                model.addAttribute("error", "Email already registered.");
+                return "index";
+            }
+            User user = new User(username, email, password);
+            userService.createUser(user);
+            model.addAttribute("message", "Registration successful. Please log in.");
+            return "redirect:/login";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "An error occured while processing the registration");
+            return "error";
+        }
     }
 
     @GetMapping("/login")
     public String showLoginPage() {
-        return "login"; 
+        return "login";
     }
 }
