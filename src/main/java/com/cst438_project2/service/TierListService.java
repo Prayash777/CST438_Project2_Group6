@@ -33,7 +33,9 @@ public class TierListService {
     }
 
     public List<Categories> getCategories() {
-        return categoriesRepository.findAll();
+        List<Categories> categories = categoriesRepository.findAll();
+        System.out.println("Fetched categories: " + categories);
+        return categories;
     }
 
     public Optional<Categories> getCategoriesById(int id) {

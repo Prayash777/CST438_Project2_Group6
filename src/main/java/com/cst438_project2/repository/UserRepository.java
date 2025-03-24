@@ -14,6 +14,5 @@ import com.cst438_project2.model.Role;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    Optional<User> findByUsername(String username);
-    Optional<User> findByRole(Role role);
+    Optional<User> findByEmail(String email);
 }

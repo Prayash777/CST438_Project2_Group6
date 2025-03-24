@@ -13,20 +13,23 @@ import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
 @Entity
+@Table(name = "categories")
 public class Categories {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "categoryId")
+    @Column(name = "category_id")
     private int categoryId;
 
-    @Column(name = "categoryName")
+    @Column(name = "category_name")
     private String categoryName;
     
     @Temporal(TemporalType.DATE)
+    @Column(name = "start_date", nullable = false)
     private Date startDate;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "end_date", nullable = false)
     private Date endDate;
     
     public Categories() {}

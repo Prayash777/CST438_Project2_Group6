@@ -1,33 +1,30 @@
-package com.cst438_project2.controller;
+// package com.cst438_project2.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import com.cst438_project2.model.Categories;
-import com.cst438_project2.service.TierListService;
-import java.util.List;
-import org.springframework.ui.Model;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.stereotype.Controller;
+// import org.springframework.web.bind.annotation.GetMapping;
+// import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-public class HomeController {
-    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+// import com.cst438_project2.model.Categories;
+// import com.cst438_project2.service.TierListService;
+// import java.util.List;
+// import org.springframework.ui.Model;
 
-    @Autowired
-    private TierListService tierListService;
+// @Controller
+// @RequestMapping("/")
+// public class HomeController {
+//     @Autowired
+//     private TierListService tierListService;
+    
 
-    @GetMapping("/")
-    public String home(Model model) {
-        List<Categories> categories = tierListService.getCategories();
-        if (categories != null && !categories.isEmpty()) {
-            logger.info("Categories successfully retrieved: {}", categories);
-        } else {
-            logger.warn("No categories found in the database.");
-        }
-        System.out.println("Categories: " + categories);
+//     @GetMapping("/")
+//     public String home(Model model) {
+//         List<Categories> categories = tierListService.getCategories();
+        
+//         System.out.println("Categories: " + categories);
 
-        model.addAttribute("categories", categories);
-        return "index";
-    }
-}
+//         model.addAttribute("categories", categories);
+//         return "index";
+//     }
+   
+// }

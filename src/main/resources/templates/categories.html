@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Welcome to the Tier List!</h1>
+    <select id="categoryDropdown" onchange="location = this.value;">
+        <option value="">Select a category</option>
+        <option th:each="category : ${categories}" 
+                th:value="@{/api/categories/{categoryId}/items(categoryId=${category.categoryId})}" 
+                th:text="${category.categoryName}">
+        </option>
+    </select>
+    
+
+
+</body>
+</html>

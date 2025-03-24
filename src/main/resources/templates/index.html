@@ -1,25 +1,50 @@
-<!-- <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+ <!--<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Home Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Our Service</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Welcome to the Tier List!</h1>
-    <ul>
-        <li th:each="category : ${categories}">
-            <h2 th:text="${category.categoryName}">Category name</h2>
-            <a th:href="@{/api/categories/{categoryId}/items(id=${category.categoryId})}">V</a>
-        </li>
-    </ul>
 
-    <h3>Choose a category</h3>
-    <form action="index" method="post">
-        <input type="text" name="categoryName" placeholder="Enter a category" required>
-        <button type="submit">Create</button>
-    </form>
+<div class="container mt-5">
+    <h2 class="text-center">Welcome to Our Service</h2>
+    <p class="text-center">Please log in to your account or sign up if you don't have one.</p>
+
+    Login Form
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <h3>Login</h3>
+            <form action="/api/auth/login" method="post">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <hr>
+
+     Sign-Up Section -->
+    <!-- <div class="row mt-4">
+        <div class="col-md-6 mx-auto text-center">
+            <p>Don't have an account? <a href="/api/auth/register" class="btn btn-success">Get Started</a></p>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-</html> -->
+</html> --> 
 
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
