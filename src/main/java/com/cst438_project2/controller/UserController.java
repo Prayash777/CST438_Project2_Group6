@@ -15,6 +15,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/deleteAllUsers")
+    public String deleteAllUsers() {
+        userService.deleteAllUsers();
+        return "index";
+    }
+
 
     @GetMapping("/")
     public String showRegistrationPage() {
@@ -28,7 +34,7 @@ public class UserController {
                 model.addAttribute("error", "Email already registered.");
                 return "index";
             }
-            User user = new User(username, email, password);
+            User user = new User(username, password, email);
             userService.createUser(user);
             model.addAttribute("message", "Registration successful. Please log in.");
             return "redirect:/login";
@@ -51,6 +57,8 @@ public class UserController {
             System.out.println("User not found with username: " + username);
         } else {
             System.out.println("Found user: " + user.getUsername());
+            System.out.println(user.getPassword());
+            System.out.println(user.getEmail());
         }
         if (user != null && user.getPassword().equals(password)) {
             model.addAttribute("message", "Login successful");

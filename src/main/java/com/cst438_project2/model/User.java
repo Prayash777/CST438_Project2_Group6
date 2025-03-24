@@ -22,6 +22,7 @@ public class User {
     @Enumerated(EnumType.STRING) 
     private Role role;
 
+    @Column(nullable = false)
     private String email;
 
     public User() {
@@ -31,7 +32,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.role = Role.USER; 
     }
 
     public int getId() {
