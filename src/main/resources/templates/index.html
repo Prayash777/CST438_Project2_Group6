@@ -1,33 +1,10 @@
-<!-- <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Home Page</title>
-</head>
-<body>
-    <h1>Welcome to the Tier List!</h1>
-    <ul>
-        <li th:each="category : ${categories}">
-            <h2 th:text="${category.categoryName}">Category name</h2>
-            <a th:href="@{/api/categories/{categoryId}/items(id=${category.categoryId})}">V</a>
-        </li>
-    </ul>
-
-    <h3>Choose a category</h3>
-    <form action="index" method="post">
-        <input type="text" name="categoryName" placeholder="Enter a category" required>
-        <button type="submit">Create</button>
-    </form>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Register</title>
 </head>
 <body>
-    <h1>Register</h1>
+    <h1>ReGister</h1>
     <form action="/register" method="post">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required><br>
@@ -40,5 +17,6 @@
 
         <button type="submit">Register</button>
     </form>
+    <p>Already Registered? <a href="/login">Login here</a></p>
 </body>
 </html>

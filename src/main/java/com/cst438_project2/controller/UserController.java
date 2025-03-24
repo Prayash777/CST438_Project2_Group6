@@ -15,22 +15,57 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/register")
-    public String showRegisterPage() {
-        return "index"; 
+    @GetMapping("/deleteAllUsers")
+    public String deleteAllUsers() {
+        userService.deleteAllUsers();
+        return "index";
+    }
+
+
+    @GetMapping("/")
+    public String showRegistrationPage() {
+        return "index";
     }
 
     @PostMapping("/register")
     public String registerUser(@RequestParam String username, @RequestParam String email, @RequestParam String password, Model model) {
-        User user = new User(username, email, password);
-        userService.createUser(user);
-
-        model.addAttribute("message", "Registration successful. Please log in.");
-        return "login";
+        try {
+            if (userService.findByEmail(email).isPresent()) {
+                model.addAttribute("error", "Email already registered.");
+                return "index";
+            }
+            User user = new User(username, password, email);
+            userService.createUser(user);
+            model.addAttribute("message", "Registration successful. Please log in.");
+            return "redirect:/login";
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("error", "An error occured while processing the registration");
+            return "error";
+        }
     }
 
     @GetMapping("/login")
     public String showLoginPage() {
-        return "login"; 
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
+        User user = userService.findByUsername(username).orElse(null);
+        if (user == null) {
+            System.out.println("User not found with username: " + username);
+        } else {
+            System.out.println("Found user: " + user.getUsername());
+            System.out.println(user.getPassword());
+            System.out.println(user.getEmail());
+        }
+        if (user != null && user.getPassword().equals(password)) {
+            model.addAttribute("message", "Login successful");
+            return "tier";
+        } else {
+            model.addAttribute("error", "Invalid username or password");
+            return "login";
+        }
     }
 }
