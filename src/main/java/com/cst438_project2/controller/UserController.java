@@ -43,4 +43,21 @@ public class UserController {
     public String showLoginPage() {
         return "login";
     }
+
+    @PostMapping("/login")
+    public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
+        User user = userService.findByUsername(username).orElse(null);
+        if (user == null) {
+            System.out.println("User not found with username: " + username);
+        } else {
+            System.out.println("Found user: " + user.getUsername());
+        }
+        if (user != null && user.getPassword().equals(password)) {
+            model.addAttribute("message", "Login successful");
+            return "tier";
+        } else {
+            model.addAttribute("error", "Invalid username or password");
+            return "login";
+        }
+    }
 }
