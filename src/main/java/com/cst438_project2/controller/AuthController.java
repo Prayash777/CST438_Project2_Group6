@@ -1,31 +1,44 @@
 package com.cst438_project2.controller;
 
+import com.cst438_project2.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class AuthController {
 
+    @Autowired
+    private UserService userService;
+
     /**
      * GET /login
-     * Show the login page (login.html).
+     * Show the login page.
      */
     @GetMapping("/login")
     public String showLoginPage(Model model) {
-        // Add any model attributes if needed
-        return "login";  // Loads templates/login.html
+        return "login";  
     }
 
-//     @PostMapping("/login")
-//     public String processLogin(
-//             @RequestParam String username,
-//             @RequestParam String password,
-//             Model model
-//     ) {
-//         // 1) Attempt authentication
-//         // 2) If successful, redirect to user’s dashboard or something
-//         // 3) If fail, show error message
-//         return "redirect:/somePage";
-//     }
+    /**
+     * POST /login
+     * Process the login form.
+     */
+    @PostMapping("/login")
+    public String processLogin(
+            @RequestParam String username,
+            @RequestParam String password,
+            Model model
+    ) {
+        // Authenticate the user using UserService
+        if (!userService.authenticate(username, password)) {
+            model.addAttribute("error", "Invalid username or password.");
+            return "login"; 
+        }
+        
+        // On successful login, you can set a message and redirect
+        model.addAttribute("message", "Login successful!");
+        return "redirect:/landing"; 
+    }
 }

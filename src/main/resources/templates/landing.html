@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Landing Page</title>
+</head>
+<body>
+    <h1>Welcome, <span th:text="${username}">User</span>!</h1>
+
+    <!-- If you have an activeList -->
+    <!-- <p>Your current active list is: <span th:text="${activeList?.tier}">None</span></p> -->
+
+    <ul>
+        <li><a href="/all_lists">See All Lists</a></li>
+        <li><a href="/public_lists">View Public Lists</a></li>
+        <li><a href="/modify_account">Modify Account</a></li>
+    </ul>
+</body>
+</html>
