@@ -4,6 +4,8 @@ import com.cst438_project2.model.Categories;
 import com.cst438_project2.model.Item;
 import com.cst438_project2.model.Tier;
 import com.cst438_project2.model.TierEntry;
+import com.cst438_project2.model.User;
+
 
 import com.cst438_project2.repository.CategoriesRepository;
 import com.cst438_project2.repository.TierListRepository;
@@ -42,17 +44,6 @@ public class TierListService {
         return categoriesRepository.findById(id);
     }
 
-    // @PostConstruct
-    // public void insertData() {
-    //     List<Categories> categories = categoriesRepository.findAll();
-    //     boolean exists = categories.stream().anyMatch(c -> c.getCategoryName().equals("Movies"));
-    //     if (!exists) {
-    //         Categories insertCategories = new Categories("Movies", new Date(), new Date());
-    //         categoriesRepository.save(insertCategories);
-    //     }
-    //     categories = categoriesRepository.findAll();
-    //     categories.forEach(category -> System.out.println("Category: " + category.getCategoryName()));
-    // }
 
     public void deleteCategories(int id) {
         categoriesRepository.deleteById(id);
@@ -69,4 +60,11 @@ public class TierListService {
             e.printStackTrace();
         }
     }
+    public List<TierEntry> findTierEntriesByUserAndCategory(User user, Categories category) {
+        return tierListRepository.findByUserAndCategory(user, category);
+    }
+    public List<TierEntry> findTierEntriesByUser(User user){
+        return tierListRepository.findTierEntriesByUser(user);
+    }
+
 }

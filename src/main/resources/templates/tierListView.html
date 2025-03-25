@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Tier List</title>
+</head>
+<body>
+    <h1>Tier List for <span th:text="${user.username}"></span></h1>
+    <h2>Category: <span th:text="${category}"></span></h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Tier</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="entry : ${tierEntries}">
+                <td th:text="${entry.itemName}"></td>
+                <td th:text="${entry.tier}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a href="/tier-list">Back to Tier List</a>
+</body>
+</html>
