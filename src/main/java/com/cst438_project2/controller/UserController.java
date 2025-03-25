@@ -1,40 +1,3 @@
-// package com.cst438_project2.controller;
-
-// import com.cst438_project2.service.UserService;
-// import com.cst438_project2.model.User;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.stereotype.Controller;
-// import org.springframework.ui.Model;
-// import org.springframework.web.bind.annotation.GetMapping;
-// import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.RequestParam;
-// import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RestController;
-
-// @Controller
-// @RequestMapping("/api/users")
-// public class UserController {
-
-//     @Autowired
-//     private UserService userService;
-
-//     @GetMapping("/register")
-//     public String showRegisterPage() {
-//         return "register"; 
-//     }
-    
-//     @PostMapping("/register")
-//     public String registerUser(@RequestParam String username, @RequestParam String email, @RequestParam String password, Model model) {
-//          model.addAttribute("message", "Registration successful!");
-//         return "register"; // Show register.html after submitting
-//     }
-
-//     @GetMapping("/login")
-//     public String showLoginPage() {
-//         return "login"; 
-//     }
-// }
-
 package com.cst438_project2.controller;
 
 import com.cst438_project2.service.UserService;
@@ -45,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
@@ -57,7 +21,6 @@ public class UserController {
         userService.deleteAllUsers();
         return "index";
     }
-
 
     @GetMapping("/")
     public String showRegistrationPage() {
@@ -88,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
+    public String loginUser(@RequestParam String username, @RequestParam String password, Model model, HttpSession session) {
         User user = userService.findByUsername(username).orElse(null);
         if (user == null) {
             System.out.println("User not found with username: " + username);
@@ -98,6 +61,7 @@ public class UserController {
             System.out.println(user.getEmail());
         }
         if (user != null && user.getPassword().equals(password)) {
+            session.setAttribute("user_id", user.getId());
             model.addAttribute("message", "Login successful");
             return "tier";
         } else {

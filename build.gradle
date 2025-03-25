@@ -20,6 +20,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.jupiter:junit-jupiter-api'
@@ -34,8 +35,6 @@ dependencies {
 
 	implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 	implementation 'org.hibernate.orm:hibernate-core:6.4.1.Final' // or the version you prefer
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.security:spring-security-config'
 
 	
 }

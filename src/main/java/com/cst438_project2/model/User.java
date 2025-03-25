@@ -1,21 +1,24 @@
 package com.cst438_project2.model;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 
 @Entity
-public class User {
+@Table(name = "user")
 
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "username",unique = true, nullable = false)
     private String username;
 
 
-    @Column(nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
 

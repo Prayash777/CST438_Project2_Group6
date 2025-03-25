@@ -7,14 +7,18 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 
 @Entity
+@Table(name = "item")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "item_id")
     private int itemId;
     
-    
+    @Column(name = "item_name")
     private String itemName;
 
     @ManyToOne
@@ -23,9 +27,9 @@ public class Item {
 
     public Item() {}
 
-    public Item(String n, Categories c) {
-        this.itemName = n;
-        this.category = c;
+    public Item(String itemName, Categories categoryName) {
+        this.itemName = itemName;
+        this.category = categoryName;
     }
 
     public int getItemId() {
