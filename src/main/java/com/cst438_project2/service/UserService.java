@@ -52,8 +52,13 @@ public class UserService {
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+    public User findById(Integer id) {
+        return userRepository.findById(id).orElse(null);
+    }
 
     public void deleteAllUsers() {
         userRepository.deleteAll();
     }
+
+    
 }

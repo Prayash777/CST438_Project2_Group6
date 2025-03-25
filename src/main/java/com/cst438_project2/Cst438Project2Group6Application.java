@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.cst438_project2"})
+@ComponentScan(basePackages = "com.cst438_project2")
 public class Cst438Project2Group6Application {
 
     public static void main(String[] args) {

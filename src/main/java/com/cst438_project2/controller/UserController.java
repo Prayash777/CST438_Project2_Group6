@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
@@ -20,7 +21,6 @@ public class UserController {
         userService.deleteAllUsers();
         return "index";
     }
-
 
     @GetMapping("/")
     public String showRegistrationPage() {
@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
+    public String loginUser(@RequestParam String username, @RequestParam String password, Model model, HttpSession session) {
         User user = userService.findByUsername(username).orElse(null);
         if (user == null) {
             System.out.println("User not found with username: " + username);
@@ -61,6 +61,7 @@ public class UserController {
             System.out.println(user.getEmail());
         }
         if (user != null && user.getPassword().equals(password)) {
+            session.setAttribute("user_id", user.getId());
             model.addAttribute("message", "Login successful");
             return "tier";
         } else {

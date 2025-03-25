@@ -5,16 +5,17 @@ import jakarta.persistence.*;
 
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Tier")
+@Table(name = "tier")
 public class Tier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tier_id")
     private int tierId;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "tier", nullable = false, unique = true)
     private String tier;
 
     @ManyToOne
@@ -27,10 +28,10 @@ public class Tier {
 
     public Tier() {}
 
-    public Tier(String t, User u, Item i){
-        this.tier = t;
-        this.user = u;
-        this.item = i;
+    public Tier(String tier, User user, Item item){
+        this.tier = tier;
+        this.user = user;
+        this.item = item;
     }
 
     public int getTierId() {
